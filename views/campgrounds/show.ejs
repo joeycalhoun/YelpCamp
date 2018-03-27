@@ -18,7 +18,6 @@
                     <h4><a><%= campground.name %></a></h4>
                     <p><%= campground.description %></p>
                     <p><em>Submitted by <%=campground.author.username%>, <%=moment(campground.createdAt).fromNow() %></em></p>
-                    
                     <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
                         <a class="btn btn-warning" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
                         <form  id="delete-form" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
@@ -117,6 +116,7 @@
     </div>
 </div>
 
+<!--Script to initialize google maps API plugin-->
 <script>
   function initMap() {
     var lat = <%= campground.lat %>;

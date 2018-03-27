@@ -8,10 +8,10 @@ var LocalStrategy = require("passport-local");
 var methodOverride = require("method-override");
 var seedDB = require("./seeds");
 var User = require("./models/user");
-
 var campgroundRoutes=require("./routes/campgrounds");
 var commentRoutes=require("./routes/comments");
 var indexRoutes=require("./routes/index");
+
 
 mongoose.connect(process.env.DATABASEURL);
 app.use(bodyParser.urlencoded({extended:true}));
@@ -23,7 +23,6 @@ app.locals.moment = require("moment");
 // seedDB();
 
 //Passport Config
-
 app.use(require("express-session")({
     secret: "Authentication is complex",
     resave: false,
@@ -44,6 +43,7 @@ app.use(function(req,res,next){
     next();
 });
 
+//attach prefixes to routes
 app.use(indexRoutes);
 app.use("/campgrounds",campgroundRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);

@@ -3,29 +3,33 @@ var router= express.Router();
 var Campground = require("../models/campground");
 var middleware = require("../middleware");
 var NodeGeocoder = require('node-geocoder');
+//set up google maps JS API settings
 var options = {
     provider: 'google',
     httpAdapter: 'https',
     apiKey: process.env.GEOCODER_API_KEY,
     formatter: null
 };
+//initialize google maps JS API
 var geocoder = NodeGeocoder(options);
 var multer = require('multer');
+//set up multer storage
 var storage = multer.diskStorage({
     filename: function(req, file, callback) {
     callback(null, Date.now() + file.originalname);
   }
 });
+//tell multer what type of files to accept
 var imageFilter = function (req, file, cb) {
-    // accept image files only
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
         return cb(new Error('Only image files are allowed!'), false);
     }
     cb(null, true);
 };
+//initialize multer
 var upload = multer({ storage: storage, fileFilter: imageFilter})
-
 var cloudinary = require('cloudinary');
+//configure cloudinary API
 cloudinary.config({ 
     cloud_name: "dvc6jv4k2", 
     api_key: "723576487231428", 
